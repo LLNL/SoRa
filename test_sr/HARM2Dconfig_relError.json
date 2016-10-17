@@ -1,0 +1,75 @@
+{
+  "infile"            : "../test_modifydata/2Ddata_gridReg",
+  "infileExtension"   : "dat",
+  "inVars"   : [ "x", "y" ],
+  "targetVar" : "z",
+  "seed"   : 0,
+  "depthLimit" : 30,
+  "prettyPrint" : true,
+  "HallOfFame" : {
+        "type" : "pareto"       
+  }, 
+  "select" : [ 
+        { 
+        "type" : "selTournament",
+        "tournsize" : 4
+        } ],
+  "expr"   : { "type" : "genHalfAndHalf",
+               "min_" : 1,
+               "max_" : 4
+             },
+  "islands" : {
+    "migrationFreq" : 50,
+    "numMigrants" : 10,
+    "emmigrantSelect"     : [ { 
+        "type" : "selRandom"
+        } ],
+    "NOreplacementSelect" : [ { "type" : "selWorst" } ]
+  },
+  "algo"   : {
+    "type" : "harm",
+    "initialPopulationSize" : 1000,
+    "numGenerations" : 7000,
+    "stopFrequency"  : 50,
+    "cxpb"     : 0.7,
+    "mutpb"    : 0.3,
+    "alpha"    : 0.05,
+    "beta"     : 10,
+    "gamma"    : 0.25,
+    "rho"      : 0.9,
+    "nbrindsmodel" : -1,
+    "mincutoff" : 20
+  },
+  "mate"     : "cxOnePoint",
+  "mutator" : { 
+        "type" : "multiMutOr",
+        "submutators" : [
+          {
+            "type" : "mutUniform",
+            "prob" : 0.3
+          },
+          {
+            "type" : "mutShrink",
+            "prob" : 0.1
+          },
+          {
+            "type" : "mutEphemeral",
+            "prob" : 0.6,
+            "mode" : "one"
+          }
+        ]
+  },
+  "checkpoints" : {
+     "filenamebase" : "HarmShort",
+     "allRanks"     : false,
+     "frequency"    : 100
+  },
+  "errorfunc": "avgRelError",
+  "primitives" : ["add", "sub", "mul", "div", "neg", "square", "sqrt", "arctan", "tanh", "sin", "cos"],
+  "constants"  : [ {
+        "type" : "uniform",
+        "min"  : -3,
+        "max"  : 3
+        } ] 
+
+}

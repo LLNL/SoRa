@@ -1,0 +1,14 @@
+{
+  "infile"            : "2Ddata",
+  "infileExtension"   : "dat",
+  "outfile"           : "2Ddata_gridRand",
+  "outfileExtension"  : "csv",
+  "filters"           : [
+    { "type"  : "gridRandom",
+      "xAxisName" : "x",
+      "yAxisName" : "y",
+      "xRemainingPoints" : 50,
+      "yRemainingPoints" : 40
+    }
+  ]
+}

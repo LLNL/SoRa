@@ -1,0 +1,42 @@
+{
+  "infile"            : "simplepoly",
+  "infileExtension"   : "dat",
+  "inVars"   : [ "x" ],
+  "targetVar" : "target",
+  "seed"   : 314,
+  "HallOfFame" : {
+        "type" : "hof",
+        "size" : 3
+  }, 
+  "select" : [ { 
+        "type" : "SPEA2" }
+        ],
+  "islands" : {
+    "migrationFreq" : 50,
+    "numMigrants" : 10,
+    "emmigrantSelect"     : [ { 
+        "type" : "selBest"
+        } ],
+    "NOreplacementSelect" : [ { "type" : "selWorst" } ]
+  },
+  "algo"   : {
+    "type" : "eaMuPlusLambda",
+    "numGenerations" : 100,
+    "populationSize" : 200,
+    "children" : 200,
+    "cxpb"     : 0.7,
+    "mutpb"    : 0.2
+  },
+  "mate"     : "cxOnePoint",
+  "mutators" : [ 
+        { 
+        "type" : "mutUniform",
+        "prob" : 0.2
+        } ],
+  "constants"  : [ {
+        "type" : "randint",
+        "min"  : 0,
+        "max"  : 5
+        } ],
+  "errorfunc": "avgAbsErrorSquared"
+}
