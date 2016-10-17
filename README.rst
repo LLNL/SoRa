@@ -1,4 +1,3 @@
-
 SoRa: Symbolic Regression Code
 Jim Leek
 leek2@llnl.gov
@@ -41,7 +40,7 @@ evaluation.
 
   mpi4py:  mpi4py is an MPI (Message Passing Interface) python
 library.  It is used to handle multiple islands (demes) for greater
-parallelism.  MPI should be optional, but I haven't goten around to 
+parallelism.  MPI should be optional, but I haven't gotten around to 
 fixing that yet.
 
 
