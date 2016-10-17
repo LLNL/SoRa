@@ -10,7 +10,10 @@ finding mathematical functions that match a given set of data.  It
 works by evolving an approximation function from a set of primitives.
 This makes it able to discover the form of the function, in addition
 to it's coefficients.  It has even been shown to be able to discover 
-natural physical laws from experimental data [ref].
+natural physical laws from experimental data 
+[Schmidt, M., Lipson, H.
+ Distilling Free-Form Natural Laws from Experimental Data.
+ Science 324, 5923 (2009), 81-85.].
  
 Given that SR is one of the biggest success stories in genetic
 programming, it's surprising that there doesn't seem to be an
