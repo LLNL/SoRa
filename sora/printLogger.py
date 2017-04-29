@@ -8,7 +8,14 @@
 # This file is part of SoRa.  For details, see https://github.com/llnl/SoRa.
 # Please also read SoRa/LICENSE
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-from mpi4py import MPI
+try:
+    from mpi4py import MPI
+except ImportError:
+    pass
+try:
+    import sympy
+except ImportError:
+    pass
 
 #This file contains the sympy code used for pretty printing equasions.
 #It's in a seperate function to avoid polluting the namespace shared
@@ -38,8 +45,14 @@ class printLogging:
         self.varslist = varslist
         self.prettyPrint = prettyPrint
         self.logFile = None
-        comm = MPI.COMM_WORLD
-        self.rank = comm.Get_rank()
+        try:
+            comm = MPI.COMM_WORLD
+        except NameError:
+            pass
+        try:
+            self.rank = comm.Get_rank()
+        except UnboundLocalError:
+            self.rank = 0
         if(logFilename):
             self.logFile = open(logFilename, "w")
 
@@ -88,7 +101,8 @@ class printLogging:
                 #All the functions from symbreg_primitives must be represented here in a
                 #way sympy can understand (I think having them here means if you don't have sympy
                 #this cde will still work)
-                import sympy
+
+
                 from numpy import subtract as sub
                 from numpy import multiply as mul
                 from numpy import true_divide as div
@@ -101,7 +115,7 @@ class printLogging:
                 
                 #Make sympy.symbols out of all the variables in the symbolic regression
                 print self.varslist
-                symlist = sympy.symbols(" ".join(self.varslist))  
+                symlist = sympy.symbols(" ".join(self.varslist))
                 if(not isinstance(symlist, tuple)): #Dumb workaround for symbols not returning a tuple if there is only one symbol
                     symlist = [symlist]
                 print symlist
@@ -114,7 +128,7 @@ class printLogging:
                         exec("expr = %s" % str(indiv))
                         print idx, ":", indiv.fitness, ":", expr
                     except:   #Backup case if symbreg can't handle simplifing the expression for some reason
-                        print idx, ":", indiv.fitness, ":", indiv  
+                        print idx, ":", indiv.fitness, ":", indiv
 
 
     def logPopulation(self, population):

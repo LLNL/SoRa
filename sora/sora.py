@@ -37,15 +37,22 @@ from deap import gp
 import sr_errorfuncs
 from globalData import *
 
-from mpi4py import MPI
+try:
+  from mpi4py import MPI
+except ImportError:
+  pass
 
 
 
 def main():
 
-  comm = MPI.COMM_WORLD
-  rank = comm.Get_rank()
-  size = comm.Get_size()
+  try:
+    comm = MPI.COMM_WORLD
+    rank = comm.Get_rank()
+    size = comm.Get_size()
+  except NameError:
+    rank = 0
+    size = 1
   #When searching around we can easily get bad functions that divide by 0
   #and whatnot.  In those cases we raise an exception, and throw away the
   #whole function.
