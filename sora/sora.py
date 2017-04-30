@@ -39,18 +39,19 @@ from globalData import *
 
 try:
   from mpi4py import MPI
+  mpi = True
 except ImportError:
-  pass
+  mpi = False
 
 
 
 def main():
 
-  try:
+  if mpi:
     comm = MPI.COMM_WORLD
     rank = comm.Get_rank()
     size = comm.Get_size()
-  except NameError:
+  else:
     rank = 0
     size = 1
   #When searching around we can easily get bad functions that divide by 0
@@ -235,7 +236,7 @@ def main():
 
     #If the migration counter is over the migration freqency, it's time to migrate (if we have multiple islands)
     migrationCounter += algoArgs["stopFrequency"]
-    if(migrationCounter >= islandConfig["migrationFreq"] and size > 1):  
+    if(migrationCounter >= islandConfig["migrationFreq"] and mpi and size > 1):  
       migrationCounter = 0
       sr_migration.MPIMigRing(comm, pop, islandConfig["numMigrants"], toolbox.emmigrantSelect, replaceSelect, logger)
 
@@ -250,7 +251,7 @@ def main():
 
   #vvvvvvvvvvvvvvvv Run is done, compile all Hall of Fames from all ranks vvvvvvvv
   #mpi4py doesn't allow gather for object, so I wrote my own gather
-  if(size > 0):
+  if(mpi and size > 1):
     if(rank == 0):
       for ii in range(1,size):
         inpop = comm.recv(source=MPI.ANY_SOURCE)

@@ -10,8 +10,9 @@
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 try:
     from mpi4py import MPI
+    mpi = True
 except ImportError:
-    pass
+    mpi = False
 try:
     import sympy
 except ImportError:
@@ -45,14 +46,12 @@ class printLogging:
         self.varslist = varslist
         self.prettyPrint = prettyPrint
         self.logFile = None
-        try:
+        if mpi:
             comm = MPI.COMM_WORLD
-        except NameError:
-            pass
-        try:
             self.rank = comm.Get_rank()
-        except UnboundLocalError:
+        else:
             self.rank = 0
+
         if(logFilename):
             self.logFile = open(logFilename, "w")
 
@@ -93,7 +92,7 @@ class printLogging:
         if(self.printLevel >= printLevel and (self.rank == 0 or self.allRanksPrint)):
             print "population size: %d" % len(population)
 
-            if(not self.prettyPrint):  #simple case, no pretty printing
+            if(not sympy or not self.prettyPrint):  #simple case, no pretty printing
                 for (idx, indiv) in enumerate(population):
                     print idx, ":", indiv.fitness, ":", indiv  
 
