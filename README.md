@@ -177,7 +177,7 @@ allowed.
 
 This example has 3 columns:
 ```
-temp,rho,SabsErr
+      temp,                  rho,                   SabsErr
 1.000000000000000E-06,1.000000000000000E-09,-9.215922916587857E-02
 1.000000000000000E-06,1.467800000000000E-09,-9.215925486108226E-02
 1.000000000000000E-06,2.154430000000000E-09,-9.215929362427140E-02
@@ -205,7 +205,7 @@ CSV, but with white space separators instead of commas.  The first row
 is expected to be the column variable names.  Like this:
 ```
 \# Experimental cold energy data 7.2003
-T 	rho  	E 	S 	
+         T 	                rho  	                E 	                  S 	
 9.999999999999999E-10 	1.000000000000000E-15 	0.000000000000000E+00 	5.136477167200000E-02 	
 9.999999999999999E-10 	1.122018000000000E-15 	0.000000000000000E+00 	5.950234464700000E-02 	
 9.999999999999999E-10 	2.818383000000000E-15 	0.000000000000000E+00 	5.457897012000000E-02 	
@@ -280,9 +280,9 @@ will need an "islands" section in your configuration file, which
 HARM2Dconfig.json has.  So let's try it.  Our MPI cluster has 20
 processors per node, so we can run a lot on one node.  We'll run 6
 islands on one node, with 4 sub-evaluators.  (This is a bit of an
-overload, but should be find.) 
+overload, but should be fine.) 
 
-srun -N1 -n6 ../doSR.py -t4 HARMTFconfig.json
+srun -N1 -n6 ../sora.py -t4 HARM2Dconfig.json
 ```
   PID USER      PR  NI  VIRT  RES  SHR S %CPU %MEM    TIME+  COMMAND           
  60746 leek2     20   0  528m  29m 8284 R 69.6  0.0   0:19.67 python            
@@ -308,13 +308,8 @@ major section and the choices therein.
   "infile"            : "foo",
   "infileExtension"   : "dat",
 
-<<<<<<< HEAD:sr/README.rst
   This will cause SoRa to look for a file named foo.dat.  Which will
 assume ASCII white-space seperated column (DAT) format.  Any extension
-=======
-This will cause SaRang to look for a file named foo.dat.  Which will
-assume ASCII white-space separated column (DAT) format.  Any extension
-    >>>>>>> 7787acd2988272900e5edbf2fdf5b38000de494d:sr/README
 other than CSV will be read as a DAT file.
   infileExtension may also be CSV, which will open the file as a
 comma-separated value file.
@@ -600,9 +595,7 @@ SoRa (all from DEAP).
 except that it tries to limit the size of the answers.  This is the
 best algorithm for Symbolic Regression in my opinion.  The following
 paper explains the details. [^2]
-[^2]: Gardner, M. A., Gagn\E9, C., & Parizeau, M. (2015). Controlling code
-growth by dynamically shaping the genotype size distribution. Genetic
-Programming and Evolvable Machines, 16(4), 455-498. 
+ 
 ```
   "algo"   : {
     "type" : "harm",                #Algorithm name
@@ -732,11 +725,8 @@ generation.
 "Ephemeral Constants.".  Constants are generated as terminals.  A
 terminal is either a variable or a constant, so there are a lot of
 constant generated.  
-<<<<<<< HEAD:sr/README.rst
+
   SoRa allows the user to define distributation and ranges for
-=======
-  SaRang allows the user to define distribution and ranges for
-     >>>>>>> 7787acd2988272900e5edbf2fdf5b38000de494d:sr/README
 constant generation, and many can be defined.  For example, if you
 think you may have one kind of constant around zero, and another kind
 that an integer between (3,8), instead of generating a random number
@@ -891,3 +881,7 @@ The boundary points always remain though, the lowest and greatest X and Y values
 [^1]: [Schmidt, M., Lipson, H.
  Distilling Free-Form Natural Laws from Experimental Data.
  Science 324, 5923 (2009), 81-85.]
+
+[^2]: Gardner, M. A., Gagn\E9, C., & Parizeau, M. (2015). Controlling code
+growth by dynamically shaping the genotype size distribution. Genetic
+Programming and Evolvable Machines, 16(4), 455-498.
