@@ -46,12 +46,12 @@ class printLogging:
         self.varslist = varslist
         self.prettyPrint = prettyPrint
         self.logFile = None
+<<<<<<< HEAD
         if mpi:
             comm = MPI.COMM_WORLD
             self.rank = comm.Get_rank()
         else:
             self.rank = 0
-
         if(logFilename):
             self.logFile = open(logFilename, "w")
 
