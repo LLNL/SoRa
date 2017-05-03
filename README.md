@@ -59,11 +59,11 @@ usage: sora.py [options] configFile
 
 Options:
   * -h, --help            show this help message and exit
-  * -i INPUTFILE, --input-file=INPUTFILE
+  * -i INPUTFILE, --input-file=INPUTFILE  
 *The name of the input file*
-  * -t NUMTHREADS, --num-threads=NUMTHREADS
+  * -t NUMTHREADS, --num-threads=NUMTHREADS  
 *The number of threads (actually processes) to use for evaluation*
-  * -p PRINTLEVEL, --print-level=PRINTLEVEL
+  * -p PRINTLEVEL, --print-level=PRINTLEVEL  
 *Print level defines the verbosity of the output.  Lower numbers give less output.  
 0: Errors and hall of fame only  
 1: Warning and Errors  
@@ -73,7 +73,7 @@ Options:
 5: All debugging output*
   * -r, --all-ranks-print  
 *All Ranks Print describes how the printlevel is applied on different ranks.  By default only rank 0 outputs anything.* 
-  * -c LOADCHECKPOINT, --load-checkpoint=LOADCHECKPOINT
+  * -c LOADCHECKPOINT, --load-checkpoint=LOADCHECKPOINT  
 To restart a run pass the checkpoint file basename to load.  The Resulting filename will be "<name>.<rank>.check".
 For example "TF.0.check".  All ranks that find a checkpoint file will load it, otherwise they
 will generate a new population.
@@ -176,22 +176,22 @@ other value in the column should be a double.  Comments are not
 allowed. 
 
 This example has 3 columns:
-
+```
 temp,rho,SabsErr
 1.000000000000000E-06,1.000000000000000E-09,-9.215922916587857E-02
 1.000000000000000E-06,1.467800000000000E-09,-9.215925486108226E-02
 1.000000000000000E-06,2.154430000000000E-09,-9.215929362427140E-02
 1.000000000000000E-06,3.162280000000000E-09,-9.215935277990283E-02
-
+```
 This comes from a 2D function SabsErr(temp,rho).  As you can see,
 the first column is named temp, the second rho, and the third
 SabsErr.  In the config file you would have this:
-
+```
   "infile"            : "foo",
   "infileExtension"   : "csv",
   "inVars"    : [ "temp", "rho" ],
   "targetVar" : "SabsErr",      
-
+```
   2c.2: DAT format.
       DAT is a white space separated ASCII data column format.
 Unfortunately it is not nearly as standardized as CSV format, but
@@ -203,21 +203,21 @@ to read DAT format.
 line to designate a comment.  Aside from that it is very similar to
 CSV, but with white space separators instead of commas.  The first row
 is expected to be the column variable names.  Like this:
-
+```
 \# Experimental cold energy data 7.2003
 T 	rho  	E 	S 	
 9.999999999999999E-10 	1.000000000000000E-15 	0.000000000000000E+00 	5.136477167200000E-02 	
 9.999999999999999E-10 	1.122018000000000E-15 	0.000000000000000E+00 	5.950234464700000E-02 	
 9.999999999999999E-10 	2.818383000000000E-15 	0.000000000000000E+00 	5.457897012000000E-02 	
 9.999999999999999E-10 	7.079458000000000E-15 	0.000000000000000E+00 	6.013146606200000E-02 
-
+```
 And in the config file:
-
+```
   "infile"            : "foo",
   "infileExtension"   : "dat",
   "inVars"    : [ "T", "rho" ],
   "targetVar" : "E",      
-        
+```        
 Note that this configuration will ignore the S column
 completely!  SoRa will only try to match the function E(T,rho).
 
