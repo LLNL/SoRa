@@ -10,12 +10,14 @@
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 try:
     from mpi4py import MPI
-    mpi = True
+    hasMpi = True
 except ImportError:
-    mpi = False
+    hasMpi = False
 try:
     import sympy
+    hasSympy = True
 except ImportError:
+    hasSympy = False
     pass
 
 #This file contains the sympy code used for pretty printing equasions.
@@ -46,7 +48,7 @@ class printLogging:
         self.varslist = varslist
         self.prettyPrint = prettyPrint
         self.logFile = None
-        if mpi:
+        if hasMpi:
             comm = MPI.COMM_WORLD
             self.rank = comm.Get_rank()
         else:
@@ -92,14 +94,9 @@ class printLogging:
         if(self.printLevel >= printLevel and (self.rank == 0 or self.allRanksPrint)):
             print "population size: %d" % len(population)
 
-            try:
-                if(not sympy or not self.prettyPrint):  #simple case, no pretty printing
-                    for (idx, indiv) in enumerate(population):
-                        print idx, ":", indiv.fitness, ":", indiv
-            except NameError:
-                if (not self.prettyPrint): #Not remotely sure this is appropriate, very lazy workaround
-                    for (idx, indiv) in enumerate(population):
-                        print idx, ":", indiv.fitness, ":", indiv
+            if(not hasSympy or not self.prettyPrint):  #simple case, no pretty printing
+                for (idx, indiv) in enumerate(population):
+                    print idx, ":", indiv.fitness, ":", indiv
 
             else:
                 #All the functions from symbreg_primitives must be represented here in a
