@@ -1,4 +1,4 @@
-# SoRa: Symbolic Regression Code
+# SoRa: Symbolic Regression in Python
 Jim Leek
 leek2@llnl.gov
 
@@ -45,7 +45,7 @@ is a bit uglier:
   
   * mpi4py:  mpi4py is an MPI (Message Passing Interface) python
 library.  It is used to handle multiple islands (demes) for greater
-parallelism. 
+parallelism. You cannot use islands without mpi4py.
 
 ##### 2. Running SoRa
 
@@ -89,8 +89,6 @@ https://deap.readthedocs.io/en/master.
   You can find example configuration files in the test_sr directory.
 test_sr/HARM2Dconfig.json the data is sin(x^2 + y^2)
 so, unlike my original testing data, a correct answer is possible. 
-Occasionally I run and it actually finds that answer. 
-Most of the time it comes back with some complicated nonsense. 
 
    Below is the default configuration file.  Most of the items in the
 configuration file have defaults, which, amounts more or less to the
