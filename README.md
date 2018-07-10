@@ -32,8 +32,8 @@ Python is the Genetic Programming framework SoRa is built around.
 In many ways SoRa is just a front-end for DEAP. Get DEAP at
 https://github.com/DEAP/deap.
 
-  * numpy 1.9.2 - 1.13:  Numpy is mostly used to speed up function
-evaluation.  There is a known issue with Numpy 1.14.1, so until we can fix it, please use to numpy <= 1.13
+  * numpy 1.9.2 (or newer):  Numpy is mostly used to speed up function
+evaluation.  
 
   ###### SoRa optional libraries:
   * SymPy: Symbolic Python is a symbolic mathematics library for
@@ -107,7 +107,7 @@ to actually run the file below.
   "prettyPrint" : true,         #Use SymPy to pretty print functions
   "errorfunc": "avgAbsErrorSquared", #Error function guides evolution     
   "primitives" : ["add", "sub", #The primitives to make functions 
-                  "mul", "div", #out of.  No defaults!
+                  "mul", "div", #out of.  These are the defaults
                   "neg", "sqrt"],
   "HallOfFame" : {              #Type of Hall Of Fame to use
         "type" : "pareto"       

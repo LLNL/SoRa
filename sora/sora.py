@@ -58,8 +58,12 @@ def main():
   #When searching around we can easily get bad functions that divide by 0
   #and whatnot.  In those cases we raise an exception, and throw away the
   #whole function.
-  numpy.seterr(all='raise') 
-
+  if(numpy.__version__ >= '1.14'):
+    numpy.seterr(all='ignore') #We don't seem to be able to catch exceptions from numpy 1.14 reduce.
+                               #So ignore
+  else:
+    numpy.seterr(all='raise')
+    
   #Command Line arguments
   parser = OptionParser()
   parser.usage = "SoRa is a symbolic regression tool.  It reads data from a file an input file \n" + \
@@ -166,10 +170,10 @@ def main():
   islandConfig = {}
   if(config.has_key("islands")):
     islandConfig = config["islands"]
-  islandConfig = sr_factories.setDefaults(islandConfig, sr_factories.islandsDefaults)
+    islandConfig = sr_factories.setDefaults(islandConfig, sr_factories.islandsDefaults)
 
-  sr_factories.selectionFactory("emmigrantSelect", rank, islandConfig, toolbox)
-  sr_factories.selectionFactory("replacementSelect", rank, islandConfig, toolbox)
+    sr_factories.selectionFactory("emmigrantSelect", rank, islandConfig, toolbox)
+    sr_factories.selectionFactory("replacementSelect", rank, islandConfig, toolbox)
 
   #And get the checkpoint configuration before we start
   checkpointsConfig = {}
@@ -237,7 +241,7 @@ def main():
 
     #If the migration counter is over the migration freqency, it's time to migrate (if we have multiple islands)
     migrationCounter += algoArgs["stopFrequency"]
-    if(migrationCounter >= islandConfig["migrationFreq"] and mpi and size > 1):  
+    if(mpi and size > 1 and migrationCounter >= islandConfig["migrationFreq"]):  
       migrationCounter = 0
       sr_migration.MPIMigRing(comm, pop, islandConfig["numMigrants"], toolbox.emmigrantSelect, replaceSelect, logger)
 

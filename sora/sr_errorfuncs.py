@@ -47,6 +47,8 @@ class totalAbsErrorSquared(object):
 
             sqerror = numpy.sum((func(*self.inVarValues) - self.targetVarValues)**2)
 
+            if(numpy.isnan(sqerror)):
+                return (sys.float_info.max,)
             return (sqerror,)
         except :
             return (sys.float_info.max,)
@@ -80,7 +82,8 @@ class avgAbsErrorSquared(object):
             func = toolbox.compile(expr=individual)
 
             sqerror = numpy.average((func(*self.inVarValues) - self.targetVarValues)**2)
-
+            if(numpy.isnan(sqerror)):
+                return (sys.float_info.max,)
             return (sqerror,)
         except NameError as ne:
             print ne
@@ -118,6 +121,8 @@ class maxAbsErrorSquared(object):
 
             error = numpy.max(func(*self.inVarValues) - self.targetVarValues)
 
+            if(numpy.isnan(error)):
+                return (sys.float_info.max,)
             return (error,)
         except :
             return (sys.float_info.max,)
@@ -155,6 +160,8 @@ class avgRelError(object):
             error = numpy.fabs(func(*self.inVarValues) - self.targetVarValues) / self.targetVarValues
             avgerror = numpy.average(error)
             
+            if(numpy.isnan(avgerror)):
+                return (sys.float_info.max,)
             return (avgerror,)
         except NameError as ne:
             print ne
@@ -195,6 +202,8 @@ class totRelError(object):
             error = numpy.fabs(func(*self.inVarValues) - self.targetVarValues) /  self.targetVarValues
             sumerror = numpy.sum(error)
             
+            if(numpy.isnan(sumerror)):
+                return (sys.float_info.max,)
             return (sumerror,)
         except NameError as ne:
             print ne
@@ -235,6 +244,8 @@ class maxRelError(object):
             error = numpy.fabs((func(*self.inVarValues) - self.targetVarValues)) / self.targetVarValues
             maxerror = numpy.max(error)
             
+            if(numpy.isnan(maxerror)):
+                return (sys.float_info.max,)
             return (maxerror,)
         except NameError as ne:
             print ne
@@ -274,6 +285,8 @@ class rSquared(object):
             sumSqErrors = sum((func(*self.inVarValues) - self.targetVarValues)**2)
             r2 = 1 - (sumSqErrors/self.variance)
             
+            if(numpy.isnan(r2)):
+                return (sys.float_info.max,)
             return (r2,)
         except NameError as ne:
             print ne
